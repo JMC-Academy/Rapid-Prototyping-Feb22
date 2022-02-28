@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIFade : JMC
+public class UIFade : GameBehaviour
 {
     public CanvasGroup fadePanel;
     void Start()
@@ -10,4 +10,5 @@ public class UIFade : JMC
         fadePanel.alpha = 1;
         FadeOutCanvas(fadePanel);
     }
+
 }
