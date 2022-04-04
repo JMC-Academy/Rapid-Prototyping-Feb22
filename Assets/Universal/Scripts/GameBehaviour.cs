@@ -6,6 +6,7 @@ public class GameBehaviour : JMC
 {
     protected static Proto1.UIManager _UI { get { return Proto1.UIManager.INSTANCE; } }
     protected static Proto2.UIManager _UI2 { get { return Proto2.UIManager.INSTANCE; } }
+    protected static BlockManager _BM { get { return BlockManager.INSTANCE; } }
 }
 
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour
