@@ -19,8 +19,19 @@ public class BlockNumber : GameBehaviour
         numberText.text = myNumber.ToString();
     }
 
+    public int GetNumber()
+    {
+        return myNumber;
+    }
+
     private void Update()
     {
         numberText.transform.position = transform.position;
+        Debug.Log(GetPosition());
+    }
+
+    Vector2 GetPosition()
+    {
+        return new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
     }
 }

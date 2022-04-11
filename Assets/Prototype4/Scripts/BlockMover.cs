@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 public enum Orientation { North, East, South, West}
+public enum RotationOptions { Vertical, Horizontal, Both}
 public class BlockMover : GameBehaviour
 {
     public float speed = 0.2f;
@@ -11,6 +12,7 @@ public class BlockMover : GameBehaviour
     public float tweenTime = 0.2f;
     public Ease tweenEase;
     public Orientation orientation;
+    public RotationOptions rotationOptions;
     bool rotating = false;
     bool moving = false;
     bool canMove = true;
@@ -50,6 +52,7 @@ public class BlockMover : GameBehaviour
             RotateBlock(-90);
         if (Input.GetKeyDown(KeyCode.LeftArrow))
             RotateBlock(90);
+            //RotateBlock(rotationOptions == RotationOptions.Vertical ? 180 : 90);
 
         if (Input.GetKeyDown(KeyCode.A))
             MoveBlock(-1);
@@ -59,12 +62,13 @@ public class BlockMover : GameBehaviour
 
     void MoveBlock(float dir)
     {
-        if (pivot.transform.position.x <= _BM.rightBound || pivot.transform.position.x >= _BM.leftBound)
+        if (CanMove())
         {
+            dir = Mathf.Clamp(dir, 0, _BM.gridWidth);
             if (moving == false)
             {
                 moving = true;
-                pivot.transform.DOMoveX(dir, tweenTime).SetRelative(true).SetEase(tweenEase).OnComplete(() => moving = false);
+                transform.DOMoveX(dir, tweenTime).SetRelative(true).SetEase(tweenEase).OnComplete(() => moving = false);
             }
         }
     }
@@ -76,5 +80,10 @@ public class BlockMover : GameBehaviour
             rotating = true;
             pivot.transform.DORotate(new Vector3(0, 0, dir), tweenTime).SetRelative(true).SetEase(tweenEase).OnComplete(() => rotating = false);
         }
+    }
+
+    bool CanMove()
+    {
+        return transform.position.x != 0 || transform.position.x != _BM.gridWidth;
     }
 }
